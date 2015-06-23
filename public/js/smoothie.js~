@@ -266,7 +266,6 @@
    *
    * @constructor
    */
-/*
   function SmoothieChart(options) {
     this.options = Util.extend({}, SmoothieChart.defaultChartOptions, options);
     this.seriesSet = [];
@@ -274,7 +273,7 @@
     this.currentVisMinValue = 0;
     this.lastRenderTimeMillis = 0;
   }
-*/
+
   SmoothieChart.defaultChartOptions = {
     millisPerPixel: 20,
     enableDpiScaling: true,

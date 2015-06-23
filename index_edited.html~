@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
   <head>
@@ -31,7 +32,7 @@
 		
 		});
 		
-	/* 
+	 
 	  // Randomly add a data point every 500ms
       var random = new TimeSeries();
       setInterval(function() {
@@ -56,7 +57,7 @@
         chart.addTimeSeries(random, { strokeStyle: 'rgba(0, 177, 172, 1)', fillStyle: 'rgba(0, 177, 172, 0.2)', lineWidth: 4 });
         chart.streamTo(document.getElementById("chart"), 500);
       }
-	  */
+	  
 
 	</script>
 	</head>
