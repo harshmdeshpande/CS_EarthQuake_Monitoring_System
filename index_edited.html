@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="./js/smoothie.js"></script>
+	<script type="text/javascript">
+	    	 var sensor = new TimeSeries();
+	      
+	      function createTimeline() {
+	        var chart = new SmoothieChart({
+															maxValue:400,minValue:250,
+															grid: { strokeStyle:'rgb(30,30,30)', fillStyle:'rgb(0,0,0)', lineWidth: 1, millisPerLine: 2000, verticalSections: 1, },
+															labels: { fillStyle:'rgb(0, 177, 172)' ,fontSize:14}});
+															
+	        chart.addTimeSeries(sensor, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+	        chart.streamTo(document.getElementById("chart"), 2000);
+	      }
+
+		var socket = io();
+		socket.on('data', function(msg) {
+			sensor.append(new Date().getTime(), msg);
+			var val=msg;
+			var status_msg="";
+			if(val>6000) 
+			status_msg="P Waves detected";
+			else if(val>3000)
+			status_msg="Mild vibrations";
+			else
+			status_msg="Normal";
+			document.getElementById("status").innerHTML=	status_msg;
+		
+		});
+		
+	/* 
+	  // Randomly add a data point every 500ms
+      var random = new TimeSeries();
+      setInterval(function() {
+	  var val=Math.random() * 10000;
+        random.append(new Date().getTime(), val);
+		var status_msg="";
+		if(val>6000) 
+		status_msg="P Waves detected";
+		else if(val>3000)
+		status_msg="Mild vibrations";
+		else
+		status_msg="Normal";
+		document.getElementById("status").innerHTML=	status_msg;
+      }, 500);
+      
+      function createTimeline() {
+        var chart = new SmoothieChart({
+			maxValue:400,minValue:250,
+			grid: { strokeStyle:'rgb(30,30,30)', fillStyle:'rgb(0,0,0)', lineWidth: 1, millisPerLine: 2000, verticalSections: 1, },
+			labels: { fillStyle:'rgb(0, 177, 172)' ,fontSize:14}});
+  
+        chart.addTimeSeries(random, { strokeStyle: 'rgba(0, 177, 172, 1)', fillStyle: 'rgba(0, 177, 172, 0.2)', lineWidth: 4 });
+        chart.streamTo(document.getElementById("chart"), 500);
+      }
+	  */
+
+	</script>
+	</head>
+	<body onload="createTimeline()">		
+		<h2 style="font-size: 26px; font-family: Calibri, Verdana; color: #00B1AC">Earthquake Monitoring System</h2>
+		<div style="float: left; width: 800px; margin-right: 20px; ">
+		<canvas id="chart" width="800" height="600"></canvas>
+		</div>
+		<div style="float: left; padding-top: 40px; width: 320px;">
+		<span style="font-size: 16px; font-family: Calibri, Verdana; color: #00B1AC">Status</span>
+		<span id="status" style="font-size: 16px; font-family: Calibri, Verdana; color: #666666">Default</span>
+		</div>
+	</body>
+</html>
+
+
+
+  	
